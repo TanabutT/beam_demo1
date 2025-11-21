@@ -1,0 +1,22 @@
+{
+  "image": "PYTHON3",
+  "metadata": {
+    "name": "Simple CSV Processor",
+    "parameter": [
+      {
+        "name": "output_csv_path",
+        "label": "Output CSV Path",
+        "helpText": "GCS path for output CSV files",
+        "paramType": "TEXT",
+        "isOptional": false
+      },
+      {
+        "name": "output_parquet_path",
+        "label": "Output Parquet Path",
+        "helpText": "GCS path for output Parquet files",
+        "paramType": "TEXT",
+        "isOptional": false
+      }
+    ]
+  }
+}

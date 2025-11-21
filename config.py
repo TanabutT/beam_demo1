@@ -8,9 +8,9 @@ Make sure you have followed the
 ## Create a Cloud Storage bucket
 
 ```sh
-export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/parquet-extract-sql-flx"
+export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/simplecsv"
 gsutil mb gs://$BUCKET
-gcloud storage folders create gs://terra-mhesi-dp-poc-gcs-bronze-01/parquet-extract-sql-flx/
+gcloud storage folders create gs://terra-mhesi-dp-poc-gcs-bronze-01/simplecsv/
 
 ```
 ## create docker file
@@ -19,7 +19,7 @@ gcloud storage folders create gs://terra-mhesi-dp-poc-gcs-bronze-01/parquet-extr
 
 ```sh
 export REGION="asia-southeast1"
-export REPOSITORY="parquet-extract-sql-flx"
+export REPOSITORY="simplecsv"
 
 gcloud artifacts repositories create $REPOSITORY \
     --repository-format=docker \
@@ -30,8 +30,8 @@ gcloud artifacts repositories create $REPOSITORY \
 ```sh
 export PROJECT="poc-piloturl-nonprod"
 export REGION="asia-southeast1"
-export REPOSITORY="parquet-extract-sql-flx"
-export IMAGE_NAME="beam-export-py"
+export REPOSITORY="simplecsv"
+export IMAGE_NAME="simplecsv-py"
 export TAG="latest"
 export IMAGE_URI="$REGION-docker.pkg.dev/$PROJECT/$REPOSITORY/$IMAGE_NAME:$TAG"
 
@@ -43,15 +43,15 @@ gcloud builds submit . --tag $IMAGE_URI
 
 ```sh
 export PROJECT="poc-piloturl-nonprod"
-export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/parquet-extract-sql-flx"
+export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/simplecsv"
 
-    gcloud dataflow flex-template build gs://$BUCKET/beam_export_py.json \
-        --image-gcr-path "$REGION-docker.pkg.dev/$PROJECT/$REPOSITORY/beam-export-py:latest" \
+    gcloud dataflow flex-template build gs://$BUCKET/simplecsv_py.json \
+        --image-gcr-path "$REGION-docker.pkg.dev/$PROJECT/$REPOSITORY/simplecsv-py:latest" \
         --sdk-language "PYTHON" \
         --flex-template-base-image "PYTHON3" \
         --py-path "." \
         --metadata-file "metadata.json" \
-        --env "FLEX_TEMPLATE_PYTHON_PY_FILE=beam_export.py" \
+        --env "FLEX_TEMPLATE_PYTHON_PY_FILE=simplecsv.py" \
         --env "FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE=requirements.txt"
 ```
 
@@ -59,13 +59,13 @@ export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/parquet-extract-sql-flx"
 
 ```sh
 export PROJECT="poc-piloturl-nonprod"
-export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/parquet-extract-sql-flx"
+export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/simplecsv"
 export CSV_OUTPUT_PATH="gs://${BUCKET}/output-csv"
 export PARQUET_OUTPUT_PATH="gs://${BUCKET}/output-parquet"
 export TEMP_LOCATION="gs://${BUCKET}/temp"
 
-gcloud dataflow flex-template run "beam-export-`date +%Y%m%d-%H%M%S`" \
-    --template-file-gcs-location "gs://$BUCKET/beam_export_py.json" \
+gcloud dataflow flex-template run "simplecsv-`date +%Y%m%d-%H%M%S`" \
+    --template-file-gcs-location "gs://$BUCKET/simplecsv_py.json" \
     --region $REGION \
     --parameters output_csv_path=\"${CSV_OUTPUT_PATH}\" \
     --parameters output_parquet_path=\"${PARQUET_OUTPUT_PATH}\" \

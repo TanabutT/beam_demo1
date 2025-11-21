@@ -1,4 +1,4 @@
-no implement, be honest, 
+no implement, be honest,
 plan to get this .py to run on dataflow gcp with python via CLI command
 step to do:
 
@@ -12,15 +12,15 @@ step to do:
         example:
             ```sh
             export PROJECT="poc-piloturl-nonprod"
-            export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/flex-test"
-            
-                gcloud dataflow flex-template build gs://$BUCKET/getting_started_py.json \
-                    --image-gcr-path "$REGION-docker.pkg.dev/$PROJECT/$REPOSITORY/getting-started-py:latest" \
+            export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/simplecsv"
+
+                gcloud dataflow flex-template build gs://$BUCKET/simplecsv_py.json \
+                    --image-gcr-path "$REGION-docker.pkg.dev/$PROJECT/$REPOSITORY/simplecsv-py:latest" \
                     --sdk-language "PYTHON" \
                     --flex-template-base-image "PYTHON3" \
                     --py-path "." \
                     --metadata-file "metadata.json" \
-                    --env "FLEX_TEMPLATE_PYTHON_PY_FILE=getting_started.py" \
+                    --env "FLEX_TEMPLATE_PYTHON_PY_FILE=simplecsv.py" \
                     --env "FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE=requirements.txt"
             ```
 2. create a dataflow job in dataflow console by run flex-template that created

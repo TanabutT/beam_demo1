@@ -33,6 +33,10 @@ Execute the script with input and output file arguments:
 ```bash
 python simplecsv.py --input_file_name input.csv --output_file_name output.csv
 ```
+or
+```bash
+python3.12 simplecsv.py
+```
 
 ## Input Format
 

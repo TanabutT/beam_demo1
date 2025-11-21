@@ -8,7 +8,7 @@ Make sure you have followed the
 ## Create a Cloud Storage bucket
 
 ```sh
-export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/simplecsv"
+export BUCKET="terra-mhesi-dp-poc-gcs-bronze-01/simplecsv/"
 gsutil mb gs://$BUCKET
 gcloud storage folders create gs://terra-mhesi-dp-poc-gcs-bronze-01/simplecsv/
 

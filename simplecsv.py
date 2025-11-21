@@ -15,8 +15,8 @@ class transformcsv(beam.DoFn):
 def run(argv=None, save_main_session=True):
     with beam.Pipeline(options=PipelineOptions()) as p:
         df = p | ReadFromText(
-            "./" + "input.csv"
-        )  # reads each row of the file as an element and passes it to transform csv
+            "gs://terra-mhesi-dp-poc-gcs-bronze-01/simplecsv/input.csv"
+        )
 
         (
             df
